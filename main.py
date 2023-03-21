@@ -7,8 +7,15 @@ import laplacianfusion
 
 # Loading the arguments
 
+# parser를 이용해 입력 받은 문자열을 문자 단위의 토큰으로 분해하고 
+# 분해된 문자를 기준으로 값 전달
 parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+# -l, --list
+# text파일의 경로(?)를 갖는 str 값을 받으며
+# 해당 text 파일은 이미지들의 경로를 포함한다.
+# 기본값은 'list_images.txt'
 parser.add_argument(
     '-l',
     '--list',
@@ -16,6 +23,11 @@ parser.add_argument(
     type=str,
     default='list_images.txt',
     help='The text file which contains the names of the images')
+
+# -f, --folder
+# 반드시 포함해야하는 값
+# 이미지를 포함하는 폴더 경로
+# 위 -l 값이 파일 이름만 갖는다면 이건 폴더 경로까지만
 parser.add_argument(
     '-f',
     '--folder',
@@ -23,6 +35,10 @@ parser.add_argument(
     type=str,
     required=True,
     help='The folder containing the images')
+
+# -hp, --heightpyr
+# 정수값
+# 라플라시안 피라미드의 높이????
 parser.add_argument(
     '-hp',
     '--heightpyr',
@@ -30,12 +46,18 @@ parser.add_argument(
     type=int,
     default=6,
     help='The height of the Laplacian pyramid')
+
+# -wc
+# 실수값
+# contrast 지수
 parser.add_argument(
     '-wc',
     dest='w_c',
     type=float,
     default=1.0,
     help='Exponent of the contrast')
+
+
 parser.add_argument(
     '-ws',
     dest='w_s',

@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import sys  
+reload(sys)   
+sys.setdefaultencoding('utf8')
 import os.path
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import ndimage, misc
+from imageio import imread
 import pdb
 
 
@@ -36,7 +40,7 @@ class Image(object):
     def __init__(self, fmt, path, crop=False, n=0):
         self.path = os.path.join("image_set", fmt, str(path))
         self.fmt = fmt
-        self.array = misc.imread(self.path)
+        self.array = imread(self.path)
         self.array = self.array.astype(np.float32) / 255
         if crop:
             self.crop_image(n)
