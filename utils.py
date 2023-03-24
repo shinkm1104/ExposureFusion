@@ -50,8 +50,8 @@ def Reduce_old(image, n, a=0.6):
             try:
                 image_reduced = np.zeros((R/2, C/2))
             except Exception as e:
-                print "Dimension Error"
-                print e
+                print( "Dimension Error")
+                print(e)
             
             for i in range(R/2):
                 for j in range(C/2):
@@ -60,8 +60,8 @@ def Reduce_old(image, n, a=0.6):
                             image_reduced[i, j] += kernel_old(m, n) * image_extended[2 * i + m + 2, 2 * j + n + 2]
             return image_reduced
     except Exception as e:
-        print "Dimension Error"
-        print e
+        print("Dimension Error")
+        print(e)
 
 
 def weighted_sum(image, i, j, a):
@@ -93,8 +93,8 @@ def Expand_old(image, n, a=0.6):
             new_floor = new_floor / np.max(new_floor)
             return new_floor                
     except Exception as e:
-        print "Dimension error"
-        print e
+        print( "Dimension error")
+        print( e)
 
 
 def Reduce1(image, a=0.6):
@@ -119,8 +119,8 @@ def Reduce(image, n, a=0.6):
             image = Reduce(image, n-1, a)
             return Reduce1(image, a)
     except Exception as e:
-        print "Dimension Error"
-        print e
+        print( "Dimension Error")
+        print( e)
 
 
 def Expand1(image, a=0.6):
@@ -148,5 +148,5 @@ def Expand(image, n, a=0.6):
             image = Expand(image, n-1, a)
             return Expand1(image, a)
     except Exception as e:
-        print "Dimension error"
-        print e
+        print( "Dimension error")
+        print( e)

@@ -87,18 +87,18 @@ class LaplacianMap(object):
 
     def result_exposure(self, w_c=1, w_s=1, w_e=1):
         "Return the Exposure Fusion image with Laplacian/Gaussian Fusion method"
-        print "weights"
+        print("weights")
         self.get_weights_map(w_c, w_s, w_e)
-        print "gaussian pyramid"
+        print("gaussian pyramid")
         self.get_gaussian_pyramid_weights()
-        print "laplacian pyramid"
+        print("laplacian pyramid")
         self.get_laplacian_pyramid_images()
         result_pyramid = []
         for floor in range(self.height_pyr):
-            print 'floor ', floor
+            print( 'floor ', floor)
             result_floor = np.zeros(self.laplacian_pyramid[0][floor].shape)
             for index in range(self.num_images):
-                print 'image ', index
+                print( 'image ', index)
                 for canal in range(3):
                     result_floor[:, :,
                                  canal] += self.laplacian_pyramid[index][floor][:, :,
@@ -107,7 +107,7 @@ class LaplacianMap(object):
         # Get the image from the Laplacian pyramid
         self.result_image = result_pyramid[-1]
         for floor in range(self.height_pyr - 2, -1, -1):
-            print 'floor ', floor
+            print ('floor ', floor)
             self.result_image = result_pyramid[floor] + utils.Expand(
                 self.result_image, 1)
         self.result_image[self.result_image < 0] = 0
