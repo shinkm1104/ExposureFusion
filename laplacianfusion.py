@@ -53,12 +53,17 @@ class LaplacianMap(object):
             self.weights.append(weight)
             sums = sums + weight
         for index in range(self.num_images):
+            # print(self.weights[index])
             self.weights[index] = self.weights[index] / sums
+            # print(self.weights[index])
         return self.weights
 
+    # 가우시안 피라미드를 만든 후 저장해주는 함수
+    # util.Reduce의 역할
     def get_gaussian_pyramid(self, image, n):
         """Return the Gaussian Pyramid of an image"""
         gaussian_pyramid_floors = [image]
+        print(gaussian_pyramid_floors)
         for floor in range(1, n):
             gaussian_pyramid_floors.append(
                 utils.Reduce(gaussian_pyramid_floors[-1], 1))
@@ -79,8 +84,8 @@ class LaplacianMap(object):
         """Return the Laplacian Pyramid of an image"""
         gaussian_pyramid_floors = self.get_gaussian_pyramid(image, n)
         laplacian_pyramid_floors = [gaussian_pyramid_floors[-1]]
-        # print(gaussian_pyramid_floors)
-        # print(laplacian_pyramid_floors)
+        print(gaussian_pyramid_floors)
+        print(laplacian_pyramid_floors)
         for floor in range(n - 2, -1, -1):
             new_floor = gaussian_pyramid_floors[floor] - utils.Expand(gaussian_pyramid_floors[floor + 1], 1)
             laplacian_pyramid_floors = [new_floor] + laplacian_pyramid_floors
@@ -93,6 +98,8 @@ class LaplacianMap(object):
             self.laplacian_pyramid.append(
                 self.get_laplacian_pyramid(self.images[index].array,
                                            self.height_pyr))
+            # print(self.get_laplacian_pyramid(self.images[index].array,
+            #                                self.height_pyr)))
         return self.laplacian_pyramid
 
     def result_exposure(self, w_c=1, w_s=1, w_e=1):

@@ -98,14 +98,21 @@ def Expand_old(image, n, a=0.6):
 
 
 def Reduce1(image, a=0.6):
+    # print('Reduce1')
     kernel = get_kernel(a)
+    # print('a')
     shape = image.shape
+    # print('shape : ',end='')
+    # print(shape)
+    # print('b')
     if len(shape) == 3:
-        image_reduced = np.zeros((shape[0]/2, shape[1]/2, 3))
+        print('image_reduced == 3')
+        image_reduced = np.zeros((int(shape[0]/2), int(shape[1]/2), 3))
         for canal in range(3):
             canal_reduced = sig.convolve2d(image[:, :, canal], kernel, 'same')
             image_reduced[:, :, canal] = canal_reduced[::2, ::2]
     else:
+        print('image_reduced else')
         image_reduced = sig.convolve2d(image, kernel, 'same')[::2, ::2]
     return image_reduced
 
