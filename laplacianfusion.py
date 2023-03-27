@@ -19,11 +19,18 @@ import pdb
 #        c = np.true_divide( a, b )
 #        c[ ~ np.isfinite( c )] = 0
 #        return c
-
-
+"""
+    image.py에서 갖고 온 3개의 이미지를 가지고
+    naive-fusion을 하는 클래스로
+    라플라시안 피라미드 이용하여 naive-image 보다 훨씬 풍부한 느낌을 준다
+"""
 class LaplacianMap(object):
     """Class for weights attribution with Laplacian Fusion"""
-
+    '''
+    이미지 처리를 위한 클래스
+    fmt  = 폴더,            path = 파일 명
+    n    = 얼마나 자를지
+    '''
     def __init__(self, fmt, names, n=3):
         """names is a liste of names, fmt is the format of the images"""
         self.images = []
@@ -61,6 +68,8 @@ class LaplacianMap(object):
         """Return the Gaussian Pyramid of the Weight map of all images"""
         self.weights_pyramid = []
         for index in range(self.num_images):
+            print(index)
+            print(self.height_pyr)
             self.weights_pyramid.append(
                 self.get_gaussian_pyramid(self.weights[index],
                                           self.height_pyr))
@@ -70,9 +79,10 @@ class LaplacianMap(object):
         """Return the Laplacian Pyramid of an image"""
         gaussian_pyramid_floors = self.get_gaussian_pyramid(image, n)
         laplacian_pyramid_floors = [gaussian_pyramid_floors[-1]]
+        # print(gaussian_pyramid_floors)
+        # print(laplacian_pyramid_floors)
         for floor in range(n - 2, -1, -1):
-            new_floor = gaussian_pyramid_floors[floor] - utils.Expand(
-                gaussian_pyramid_floors[floor + 1], 1)
+            new_floor = gaussian_pyramid_floors[floor] - utils.Expand(gaussian_pyramid_floors[floor + 1], 1)
             laplacian_pyramid_floors = [new_floor] + laplacian_pyramid_floors
         return laplacian_pyramid_floors
 

@@ -12,7 +12,8 @@ import image
 #        c[ ~ np.isfinite( c )] = 0 
 #        return c
 
-
+# image.py에서 갖고 온 3개의 이미지를 가지고
+# 실질적 fusion을 하는 클래스
 class WeightsMap(object):
     """Class for weights attribution for all images"""
 
@@ -33,7 +34,7 @@ class WeightsMap(object):
             saturation = image_name.saturation()
             exposedness = image_name.exposedness()
             weight = (contrast**w_c)*(saturation**w_s)*(exposedness**w_e) + 1e-12
-#            weight = ndimage.gaussian_filter(weight, sigma=(3, 3), order=0)
+            weight = ndimage.gaussian_filter(weight, sigma=(3, 3), order=0)
             self.weights.append(weight)
             sums = sums + weight
         for index in range(self.num_images):
@@ -54,6 +55,8 @@ class WeightsMap(object):
 if __name__ == "__main__":
     names = [line.rstrip('\n') for line in open('list_jpeg_test.txt')]
     W = WeightsMap("mask", names)
+    # names = [line.rstrip('\n') for line in open('list_jpeg.txt')]
+    # W = WeightsMap("jepg", names)
     im = W.result_exposure(1, 1, 1)
     image.show(im)
     misc.imsave("res/mask_naive.jpg", im)

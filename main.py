@@ -4,6 +4,10 @@ import argparse
 import image
 import naivefusion
 import laplacianfusion
+from datetime import datetime
+
+
+before = datetime.now()
 
 # Loading the arguments
 
@@ -86,6 +90,7 @@ parser.add_argument(
 args = parser.parse_args()
 params = vars(args)  # convert to ordinary dict
 
+# text 파일 내를 줄바꿈(\n)을 기준으로 파싱해서 3개의 파일 불러옴
 names = [line.rstrip('\n') for line in open(params['names'])]
 folder = params['folder']
 height_pyr = params['height_pyr']
@@ -97,10 +102,17 @@ w_e = params['w_e']
 
 W = naivefusion.WeightsMap(folder, names)
 res_naive = W.result_exposure(w_c, w_s, w_e)
+later_1 = datetime.now()
+print(later_1 - before)
 image.show(res_naive)
 
 # Laplacian Fusion
 
-lap = laplacianfusion.LaplacianMap(folder, names, n=height_pyr)
-res_lap = lap.result_exposure(w_c, w_s, w_e)
-image.show(res_lap)
+# lap = laplacianfusion.LaplacianMap(folder, names, n=height_pyr)
+# res_lap = lap.result_exposure(w_c, w_s, w_e)
+# later_2 = datetime.now()
+# print(later_2 - before)
+# image.show(res_lap)
+
+
+# python main.py -f mask
